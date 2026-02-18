@@ -67,6 +67,7 @@ app.use((req, res, next) => {
   } catch (error) {
     console.error("Failed to seed database:", error);
   }
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
@@ -82,9 +83,7 @@ app.use((req, res, next) => {
     return res.status(status).json({ message });
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
+  // hanya setup vite di mode development
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   } else {
@@ -92,12 +91,9 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
+  // port default 5000 jika tidak ada di environment
   const port = parseInt(process.env.PORT || "5000", 10);
-  // handle errors like ENOTSUP in restricted environments
+
   httpServer.on("error", (err: any) => {
     if (err && err.code === "ENOTSUP") {
       log("Environment does not support listening on sockets (ENOTSUP). Exiting.");
@@ -107,12 +103,11 @@ app.use((req, res, next) => {
     process.exit(1);
   });
 
+  // perbaikan: hapus reusePort agar kompatibel dengan Windows
   httpServer.listen(
     {
       port,
-      // bind to localhost since 0.0.0.0 isn’t supported in some environments
       host: "127.0.0.1",
-      reusePort: true,
     },
     () => {
       log(`serving on port ${port}`);
