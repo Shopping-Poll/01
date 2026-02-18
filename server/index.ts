@@ -1,3 +1,4 @@
+import "dotenv/config"; // load .env variables automatically
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
@@ -96,10 +97,21 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || "5000", 10);
+  // handle errors like ENOTSUP in restricted environments
+  httpServer.on("error", (err: any) => {
+    if (err && err.code === "ENOTSUP") {
+      log("Environment does not support listening on sockets (ENOTSUP). Exiting.");
+      process.exit(0);
+    }
+    console.error("HTTP server error:", err);
+    process.exit(1);
+  });
+
   httpServer.listen(
     {
       port,
-      host: "0.0.0.0",
+      // bind to localhost since 0.0.0.0 isn’t supported in some environments
+      host: "127.0.0.1",
       reusePort: true,
     },
     () => {
