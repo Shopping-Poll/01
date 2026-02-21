@@ -1,6 +1,6 @@
 node_modules
 dist
 .DS_Store
-vite.config.ts.*
+vite.config.ts.* # cspell:ignore vite
 *.tar.gz
 .env
