@@ -174,7 +174,7 @@ export default function AutomatedPromotionPage() {
           
           {/* Footer */}
           <div className="text-[10px] text-slate-500 uppercase tracking-widest opacity-60">
-            Copyright © 2026 Giorgio Armani S.p.A.
+            © 2016 - 2025 Guccio Gucci S.p.A. - All rights reserved
           </div>
         </div>
       </div>
