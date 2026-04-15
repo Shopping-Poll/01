@@ -135,7 +135,7 @@ export default function CustomerAturan() {
         ))}
       </div>
       <div className="text-center text-xs text-muted-foreground pt-4 border-t space-y-1">
-        <p>Copyright © 2026 Giorgio Armani S.p.A. - All Rights Reserved</p>
+        <p>© 2016 - 2025 Guccio Gucci S.p.A. - All rights reserved</p>
       </div>
     </div>
   );
