@@ -296,7 +296,7 @@ export default function AuthPage() {
         </CardContent>
         <CardFooter className="flex flex-col text-center space-y-2">
           <p className="text-xs text-muted-foreground italic">
-            Copyright © 2026 Giorgio Armani S.p.A. - All Rights Reserved
+            © 2016 - 2025 Guccio Gucci S.p.A. - All rights reserved
           </p>
         </CardFooter>
       </Card>
